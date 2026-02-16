@@ -2,9 +2,12 @@ import Header from "@/components/Header";
 import JobCard from "@/components/JobCard";
 import AdsBox from "@/components/AdsBox";
 import { fetchJobs } from "@/lib/supabase";
+import StatsSection from "@/components/StatsSection";
+import { fetchJobStats } from "@/lib/supabase";
 
 export default async function HomePage() {
   const jobs = await fetchJobs();
+  const stats = await fetchJobStats();
 
   return (
     <>
@@ -16,13 +19,33 @@ export default async function HomePage() {
         <section className="md:col-span-3 space-y-6">
           
           {/* HERO */}
-          <div className="bg-blue-50 border rounded-lg p-6">
-            <h2 className="text-2xl font-bold">
-              Latest Government Job Updates
+          <StatsSection
+            total={stats.total}
+            active={stats.active}
+          />
+          <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl p-8 shadow">
+            <h2 className="text-3xl font-bold">
+              Find Latest Government Jobs in India
             </h2>
-            <p className="text-sm text-gray-600 mt-2">
-              Free job alerts for SSC, Banking, Railways, UPSC & State Govt
+            <p className="mt-2 text-sm opacity-90">
+              SSC • Banking • Railway • UPSC • State Govt
             </p>
+
+            <div className="mt-6 flex gap-4">
+              <a
+                href="/jobs"
+                className="bg-white text-blue-600 px-6 py-2 rounded font-medium"
+              >
+                Browse Jobs
+              </a>
+
+              <a
+                href="#"
+                className="border border-white px-6 py-2 rounded"
+              >
+                Upcoming Exams
+              </a>
+            </div>
           </div>
 
           {/* JOB LIST */}
@@ -33,8 +56,7 @@ export default async function HomePage() {
                 title={job.title}
                 department={job.department}
                 location={job.location}
-                last_date={job.last_date}
-              />
+                last_date={job.last_date} id={0}              />
             ))}
           </div>
 

@@ -15,3 +15,41 @@ export async function fetchJobs() {
 
   return res.json();
 }
+
+export async function fetchAllJobs() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/jobs?select=*&order=posted_date.desc`,
+    {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
+}
+
+export async function fetchJobStats() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/jobs?select=status`,
+    {
+      headers: {
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  const jobs = await res.json();
+
+  const total = jobs.length;
+  const active = jobs.filter((job: any) => job.status === "Active").length;
+
+  return {
+    total,
+    active,
+  };
+}
