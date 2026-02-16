@@ -12,23 +12,41 @@ export default function JobCard({
   last_date,
 }: JobProps) {
   return (
-    <div className="border rounded-lg p-4 hover:shadow">
-      <h3 className="font-semibold text-lg">{title}</h3>
+    <div className="bg-white border rounded-xl p-5 hover:shadow-lg transition duration-300">
 
-      <p className="text-sm text-gray-600">
-        {department} • {location}
+      <div className="flex justify-between items-start">
+        <h3 className="font-semibold text-lg">
+          {title}
+        </h3>
+
+        <span className="bg-green-100 text-green-600 text-xs px-2 py-1 rounded">
+          Active
+        </span>
+      </div>
+
+      <p className="text-sm text-gray-500 mt-1">
+        {department}
       </p>
 
-      <p className="text-sm mt-2">
-        Last Date: <span className="font-medium">{last_date}</span>
+      <p className="text-sm text-gray-500">
+        Location: {location}
       </p>
 
-      <a
-        href="#"
-        className="inline-block mt-3 text-blue-600 text-sm font-medium"
-      >
-        View Details →
-      </a>
+      <div className="mt-4 flex justify-between items-center">
+        <span className="text-sm">
+          Last Date:{" "}
+          <span className="font-medium text-red-500">
+            {last_date}
+          </span>
+        </span>
+
+        <a
+          href="#"
+          className="text-blue-600 text-sm font-medium"
+        >
+          View →
+        </a>
+      </div>
     </div>
   );
 }
