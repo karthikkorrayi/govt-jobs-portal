@@ -32,7 +32,7 @@ export async function fetchAllJobs() {
 }
 
 export async function fetchJobStats() {
-  const res = await fetch(
+  const jobRes = await fetch(
     `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/jobs?select=status`,
     {
       headers: {
@@ -43,13 +43,33 @@ export async function fetchJobStats() {
     }
   );
 
-  const jobs = await res.json();
+  const jobs = await jobRes.json();
 
   const total = jobs.length;
   const active = jobs.filter((job: any) => job.status === "Active").length;
 
+  const upcomingExams = await fetchUpcomingExamCount();
+
   return {
     total,
     active,
+    upcomingExams,
   };
+}
+
+export async function fetchUpcomingExamCount() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/exams?status=eq.Upcoming&select=id`,
+    {
+      headers: {
+        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  const exams = await res.json();
+
+  return exams.length;
 }

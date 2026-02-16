@@ -22,6 +22,7 @@ export default async function HomePage() {
           <StatsSection
             total={stats.total}
             active={stats.active}
+            upcomingExams={stats.upcomingExams}
           />
           <div className="bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-xl p-8 shadow">
             <h2 className="text-3xl font-bold">
