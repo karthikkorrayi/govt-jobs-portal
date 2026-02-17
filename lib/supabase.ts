@@ -33,11 +33,11 @@ export async function fetchAllJobs() {
 
 export async function fetchJobStats() {
   const jobRes = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/jobs?select=status`,
+    `${SUPABASE_URL}/rest/v1/jobs?select=status`,
     {
       headers: {
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
       cache: "no-store",
     }
@@ -59,11 +59,11 @@ export async function fetchJobStats() {
 
 export async function fetchUpcomingExamCount() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1/exams?status=eq.Upcoming&select=id`,
+    `${SUPABASE_URL}/rest/v1/exams?status=eq.Upcoming&select=id`,
     {
       headers: {
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
       },
       cache: "no-store",
     }
@@ -72,4 +72,19 @@ export async function fetchUpcomingExamCount() {
   const exams = await res.json();
 
   return exams.length;
+}
+
+export async function fetchUpcomingExams() {
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/exams?status=eq.Upcoming&select=*&order=exam_date.asc&limit=5`,
+    {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+      },
+      cache: "no-store",
+    }
+  );
+
+  return res.json();
 }
