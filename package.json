@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "scrape": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' automation/runScrapers.ts"
+    "scrape": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' automation/runScrapers.ts",
+    "generate-test": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' automation/scrapers/generateMockTest.ts"
+
   },
   "dependencies": {
+    "@google/genai": "^2.12.0",
     "@supabase/supabase-js": "^2.95.3",
     "axios": "^1.13.6",
     "cheerio": "^1.2.0",
